@@ -47,16 +47,6 @@
 
 
 
-/* Returns TRUE if the string S contains only decimal digits, FALSE
-   otherwise. */
-static int
-all_digitsp (const char *s)
-{
-  for (; *s && *s >= '0' && *s <= '9'; s++)
-    ;
-  return !*s;
-}  
-
 /* Query the user through PAM for his PIN.  Display INFO to the user.
    Store the retrieved pin in PIN, which is of size PIN_SIZE.  If it
    does not fit, return error. */
@@ -82,8 +72,6 @@ query_user (poldi_ctx_t ctx, const char *info, char *pin, size_t pin_size)
 
       if (strlen (buffer) < 6)	/* FIXME? is it really minimum of 6 bytes? */
 	log_msg_error (ctx->loghandle, _("invalid PIN"));
-      else if (!all_digitsp (buffer))
-	log_msg_error (ctx->loghandle, _("invalid characters in PIN"));
       else
 	break;
     }
